@@ -57,20 +57,20 @@ class App(ctk.CTk):
         self.tab_view.grid(row=0, column=0, padx=5, pady=5, sticky="nsew")
 
         # Buttons Tab_1
-        image_reaper_creator = tkinter.PhotoImage(file="resources/Elegantthemes-Softies-Settings.96.png").subsample(2)
+        image_reaper_creator = tkinter.PhotoImage(file="resources/rpp_creator_icon.png").subsample(2)
         self.button_reaper_creator = ctk.CTkButton(master=self.tab_view.tab("Reaper Tools"), text="Rpp Creator",
                                                    image=image_reaper_creator, fg_color="transparent", border_spacing=1,
                                                    compound="bottom")
         self.button_reaper_creator.pack(pady=(20, 10),)
 
-        image_item_editor = tkinter.PhotoImage(file="resources/Elegantthemes-Softies-Compose.96.png").subsample(2)
+        image_item_editor = tkinter.PhotoImage(file="resources/item_editor_icon.png").subsample(2)
         self.item_editor = ctk.CTkButton(master=self.tab_view.tab("Reaper Tools"), text="Item note customizer",
                                          image=image_item_editor, fg_color="transparent", border_spacing=1,
                                          compound="bottom")
         self.item_editor.pack(pady=(20, 20),)
 
         # Buttons Tab_2
-        image_analizer = tkinter.PhotoImage(file="resources/Elegantthemes-Softies-Meter.96.png").subsample(2)
+        image_analizer = tkinter.PhotoImage(file="resources/analyzer_icon.png").subsample(2)
         self.button_audio_analizer = ctk.CTkButton(master=self.tab_view.tab("Audio"), text="Audio analyzer",
                                                    image=image_analizer, fg_color="transparent", border_spacing=1,
                                                    compound="bottom")
