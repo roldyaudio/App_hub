@@ -1,3 +1,4 @@
+import tkinter
 import customtkinter as ctk
 import subprocess
 import sys
@@ -47,7 +48,7 @@ class App(ctk.CTk):
     def __init__(self):
         super().__init__()
         # Configure
-        self.title("App Hub")
+        self.title("App Hub Launcher")
         self.grid_rowconfigure(0, weight=1)  # configure grid system
         self.grid_columnconfigure(0, weight=1)
 
@@ -56,17 +57,27 @@ class App(ctk.CTk):
         self.tab_view.grid(row=0, column=0, padx=5, pady=5, sticky="nsew")
 
         # Buttons Tab_1
-        self.button_reaper_creator = ctk.CTkButton(master=self.tab_view.tab("Reaper Tools"), text="Rpp Creator")
-        self.item_editor = ctk.CTkButton(master=self.tab_view.tab("Reaper Tools"), text="Item notes Editor")
-        self.button_reaper_creator.pack(pady=(20, 10))
-        self.item_editor.pack(pady=(20, 20))
+        image_reaper_creator = tkinter.PhotoImage(file="resources/Elegantthemes-Softies-Settings.96.png").subsample(2)
+        self.button_reaper_creator = ctk.CTkButton(master=self.tab_view.tab("Reaper Tools"), text="Rpp Creator",
+                                                   image=image_reaper_creator, fg_color="transparent", border_spacing=1,
+                                                   compound="bottom")
+        self.button_reaper_creator.pack(pady=(20, 10),)
 
-        # Buttons Tab_1
-        self.button_audio_analizer = ctk.CTkButton(master=self.tab_view.tab("Audio"), text="Audio analyzer")
+        image_item_editor = tkinter.PhotoImage(file="resources/Elegantthemes-Softies-Compose.96.png").subsample(2)
+        self.item_editor = ctk.CTkButton(master=self.tab_view.tab("Reaper Tools"), text="Item note customizer",
+                                         image=image_item_editor, fg_color="transparent", border_spacing=1,
+                                         compound="bottom")
+        self.item_editor.pack(pady=(20, 20),)
+
+        # Buttons Tab_2
+        image_analizer = tkinter.PhotoImage(file="resources/Elegantthemes-Softies-Meter.96.png").subsample(2)
+        self.button_audio_analizer = ctk.CTkButton(master=self.tab_view.tab("Audio"), text="Audio analyzer",
+                                                   image=image_analizer, fg_color="transparent", border_spacing=1,
+                                                   compound="bottom")
         self.button_audio_analizer.pack(pady=(20, 20))
 
 
 install_requirements()
 app = App()
-center_hub(app, 250, 200)
+center_hub(app, 300, 300)
 app.mainloop()
