@@ -1,4 +1,4 @@
-import tkinter
+from PIL import Image
 import customtkinter as ctk
 import subprocess
 import sys
@@ -20,11 +20,6 @@ def install_requirements():
         print(f"An unexpected error occurred: {e}")
         sys.exit(1)
 
-# Main GUI
-ctk.set_appearance_mode("System")
-ctk.set_default_color_theme("blue")
-ctk.set_widget_scaling(True)
-ctk.set_window_scaling(True)
 
 def center_hub(window, width: int, height: int):
     """Centers the window to the main display/monitor"""
@@ -35,13 +30,20 @@ def center_hub(window, width: int, height: int):
     window.geometry(f"{width}x{height}+{x}+{y}")
 
 
+# GUI config
+ctk.set_appearance_mode("dark")
+ctk.set_default_color_theme("dark-blue")
+ctk.set_widget_scaling(True)
+ctk.set_window_scaling(True)
+
+
 class MyTabs(ctk.CTkTabview):
     def __init__(self, master, **kwargs):
         super().__init__(master, **kwargs)
 
         # create tabs
-        self.add("Reaper Tools")
         self.add("Audio")
+        self.add("Reaper Tools")
 
 
 class App(ctk.CTk):
@@ -56,25 +58,43 @@ class App(ctk.CTk):
         self.tab_view = MyTabs(master=self)
         self.tab_view.grid(row=0, column=0, padx=5, pady=5, sticky="nsew")
 
-        # Buttons Tab_1
-        image_reaper_creator = tkinter.PhotoImage(file="resources/rpp_creator_icon.png").subsample(2)
-        self.button_reaper_creator = ctk.CTkButton(master=self.tab_view.tab("Reaper Tools"), text="Rpp Creator",
-                                                   image=image_reaper_creator, fg_color="transparent", border_spacing=1,
-                                                   compound="bottom")
-        self.button_reaper_creator.pack(pady=(20, 10),)
-
-        image_item_editor = tkinter.PhotoImage(file="resources/item_editor_icon.png").subsample(2)
-        self.item_editor = ctk.CTkButton(master=self.tab_view.tab("Reaper Tools"), text="Item note customizer",
-                                         image=image_item_editor, fg_color="transparent", border_spacing=1,
-                                         compound="bottom")
-        self.item_editor.pack(pady=(20, 20),)
+        # Buttons in Tab_1
+        image_analyzer = Image.open("resources/analyzer_icon.png")
+        self.button_audio_analyzer = ctk.CTkButton(master=self.tab_view.tab("Audio"),
+                                                   text="Audio properties analyzer",
+                                                   image=ctk.CTkImage(dark_image=image_analyzer, size=(50, 50)),
+                                                   fg_color="transparent",
+                                                   border_spacing=1,
+                                                   compound="bottom",
+                                                   border_color="black")
+        self.button_audio_analyzer.pack(pady=(15, 0))
+        # self.button_audio_analyzer.grid(row=0, column=0)
 
         # Buttons Tab_2
-        image_analizer = tkinter.PhotoImage(file="resources/analyzer_icon.png").subsample(2)
-        self.button_audio_analizer = ctk.CTkButton(master=self.tab_view.tab("Audio"), text="Audio analyzer",
-                                                   image=image_analizer, fg_color="transparent", border_spacing=1,
-                                                   compound="bottom")
-        self.button_audio_analizer.pack(pady=(20, 20))
+        image_reaper_creator = Image.open("resources/rpp_creator_icon.png")
+
+        self.button_reaper_creator = ctk.CTkButton(master=self.tab_view.tab("Reaper Tools"),
+                                                   text="Rpp Creator",
+                                                   image=ctk.CTkImage(dark_image=image_reaper_creator, size=(50, 50)),
+                                                   fg_color="transparent",
+                                                   border_spacing=1,
+                                                   compound="bottom",
+                                                   border_color="black",)
+        # self.button_reaper_creator.pack(pady=(15, 0),)
+        self.button_reaper_creator.grid(row=0, column=1)
+
+        image_item_editor = Image.open("resources/item_editor_icon.png")
+        self.item_editor = ctk.CTkButton(master=self.tab_view.tab("Reaper Tools"),
+                                         text="Item note customizer",
+                                         image=ctk.CTkImage(dark_image=image_item_editor, size=(50, 50)),
+                                         fg_color="transparent",
+                                         border_spacing=1,
+                                         compound="bottom",
+                                         border_color="black")
+        # self.item_editor.pack(pady=(15, 0),)
+        self.item_editor.grid(row=0, column=2, pady=15)
+
+
 
 
 install_requirements()
