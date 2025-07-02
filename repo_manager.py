@@ -1,6 +1,7 @@
 import subprocess
 import json
 import os
+import threading
 
 # JSON FUNCTIONS
 def load_repos():
@@ -31,3 +32,7 @@ def clone_or_update_repo(repo_url, download_path):
                 print(f"Error cloning repository: {result.stderr}")
     except Exception as e:
         print(f"An unexpected error occurred: {e}")
+
+
+def clone_or_update_repo_async(repo_url, download_path):
+    threading.Thread(target=clone_or_update_repo, args=(repo_url, download_path)).start()

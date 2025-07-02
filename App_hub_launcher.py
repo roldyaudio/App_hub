@@ -2,7 +2,7 @@ from PIL import Image
 import customtkinter as ctk
 import subprocess
 import sys
-from repo_manager import load_repos, clone_or_update_repo
+from repo_manager import load_repos, clone_or_update_repo_async
 
 # Package installation
 def install_requirements():
@@ -107,7 +107,7 @@ class App(ctk.CTk):
     def clone_repo(self, app_name):
         for repo in self.repos:
             if repo["name"] == app_name:
-                clone_or_update_repo(repo["repo_url"], self.download_path)
+                clone_or_update_repo_async(repo["repo_url"], self.download_path)
                 break
 
 
