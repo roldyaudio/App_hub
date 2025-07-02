@@ -2,7 +2,7 @@ from PIL import Image
 import customtkinter as ctk
 import subprocess
 import sys
-from repo_manager import load_repos, clone_repo
+from repo_manager import load_repos, clone_or_update_repo
 
 # Package installation
 def install_requirements():
@@ -45,16 +45,26 @@ class MyTabs(ctk.CTkTabview):
         # create tabs
         self.add("Audio")
         self.add("Reaper Tools")
-        # self.add("Games")
+        self.add("Backup")
 
 
 class App(ctk.CTk):
     def __init__(self):
         super().__init__()
         # Configure
-        self.title("App Hub Launcher")
+        self.title("App hub Launcher")
         self.grid_rowconfigure(0, weight=1)  # configure grid system
         self.grid_columnconfigure(0, weight=1)
+
+        # REPO CLONING
+        self.download_path, self.repos = load_repos()
+
+
+
+
+
+
+
 
         # Placement
         self.tab_view = MyTabs(master=self, segmented_button_unselected_hover_color="green", )
@@ -96,8 +106,27 @@ class App(ctk.CTk):
         self.item_editor.pack(pady=(15, 0),)
         # self.item_editor.grid(row=0, column=2, pady=15, )
 
+        # Buttons Tab_3
+            # BACKUP
+        image_backup = Image.open("resources/backup_icon.png")
+        self.backup_files = ctk.CTkButton(master=self.tab_view.tab("Backup"),
+                                         text="Backup files",
+                                         image=ctk.CTkImage(dark_image=image_backup, size=(50, 50)),
+                                         fg_color="transparent",
+                                         border_spacing=1,
+                                         compound="bottom", width=100, height=100,
+                                          command=lambda : self.clone_repo("Backup files"))
+        self.backup_files.pack(pady=(15, 0), )
+
+    def clone_repo(self, app_name):
+        for repo in self.repos:
+            if repo["name"] == app_name:
+                clone_or_update_repo(repo["repo_url"], self.download_path)
+                break
+
+
 
 install_requirements()
 app = App()
-center_hub(app, 250, 320)
+center_hub(app, 280, 320)
 app.mainloop()

@@ -1,8 +1,8 @@
 {
-  "download_path": "C:/00_repos/",
+  "download_path": "C:/App_hub",
   "repos": [
     {
-      "name": "Audio analyzer",
+      "name": "Backup files",
       "repo_url": "https://github.com/roldyaudio/zzz_backup.git"
     }
   ]
