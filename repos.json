@@ -4,6 +4,10 @@
     {
       "name": "Backup files",
       "repo_url": "https://github.com/roldyaudio/zzz_backup.git"
+    },
+    {
+      "name": "Rpp Creator",
+      "repo_url": ""
     }
   ]
 }

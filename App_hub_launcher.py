@@ -31,13 +31,6 @@ def center_hub(window, width: int, height: int):
     window.geometry(f"{width}x{height}+{x}+{y}")
 
 
-# GUI config
-ctk.set_appearance_mode("dark")
-ctk.set_default_color_theme("dark-blue")
-ctk.set_widget_scaling(True)
-ctk.set_window_scaling(True)
-
-
 class MyTabs(ctk.CTkTabview):
     def __init__(self, master, **kwargs):
         super().__init__(master, **kwargs)
@@ -58,13 +51,6 @@ class App(ctk.CTk):
 
         # REPO CLONING
         self.download_path, self.repos = load_repos()
-
-
-
-
-
-
-
 
         # Placement
         self.tab_view = MyTabs(master=self, segmented_button_unselected_hover_color="green", )
@@ -125,6 +111,10 @@ class App(ctk.CTk):
                 break
 
 
+ctk.set_appearance_mode("dark")
+ctk.set_default_color_theme("dark-blue")
+ctk.set_widget_scaling(True)
+ctk.set_window_scaling(True)
 
 install_requirements()
 app = App()
