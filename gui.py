@@ -73,11 +73,12 @@ class App(ctk.CTk):
         image_reaper_creator = Image.open("resources/rpp_creator_icon.png")
 
         self.button_reaper_creator = ctk.CTkButton(master=self.tab_view.tab("Reaper Tools"),
-                                                   text="Rec script to .rppgit",
+                                                   text="Recording script to .rpp",
                                                    image=ctk.CTkImage(dark_image=image_reaper_creator, size=(50, 50)),
                                                    fg_color="transparent",
                                                    border_spacing=1,
-                                                   compound="bottom", width=100, height=100, )
+                                                   compound="bottom", width=100, height=100,
+                                                   command=lambda : self.clone_repo("Rec script to Rpp"))
         self.button_reaper_creator.pack(pady=(15, 0),)
         # self.button_reaper_creator.grid(row=0, column=1, )
 
@@ -107,7 +108,7 @@ class App(ctk.CTk):
     def clone_repo(self, app_name):
         for repo in self.repos:
             if repo["name"] == app_name:
-                clone_or_update_repo_async(repo["repo_url"], self.download_path, file_to_run="main.py")
+                clone_or_update_repo_async(repo["repo_url"], self.download_path, file_to_run="gui.py")
                 break
 
 
@@ -118,5 +119,5 @@ ctk.set_window_scaling(True)
 
 install_requirements()
 app = App()
-center_hub(app, 280, 320)
+center_hub(app, 350, 350)
 app.mainloop()
