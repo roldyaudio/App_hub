@@ -73,7 +73,7 @@ class App(ctk.CTk):
         image_reaper_creator = Image.open("resources/rpp_creator_icon.png")
 
         self.button_reaper_creator = ctk.CTkButton(master=self.tab_view.tab("Reaper Tools"),
-                                                   text="Rpp Creator",
+                                                   text="Rec script to .rppgit",
                                                    image=ctk.CTkImage(dark_image=image_reaper_creator, size=(50, 50)),
                                                    fg_color="transparent",
                                                    border_spacing=1,
@@ -84,7 +84,7 @@ class App(ctk.CTk):
             # ITEM NOTE CUSTOMIZER BUTTON
         image_item_editor = Image.open("resources/item_editor_icon.png")
         self.item_editor = ctk.CTkButton(master=self.tab_view.tab("Reaper Tools"),
-                                         text="Item notes\ncustomizer",
+                                         text="Item notes\nEditor",
                                          image=ctk.CTkImage(dark_image=image_item_editor, size=(50, 50)),
                                          fg_color="transparent",
                                          border_spacing=1,
@@ -107,7 +107,7 @@ class App(ctk.CTk):
     def clone_repo(self, app_name):
         for repo in self.repos:
             if repo["name"] == app_name:
-                clone_or_update_repo_async(repo["repo_url"], self.download_path)
+                clone_or_update_repo_async(repo["repo_url"], self.download_path, file_to_run="main.py")
                 break
 
 
