@@ -1,9 +1,12 @@
-from PIL import Image
 import customtkinter as ctk
 import subprocess
 import sys
 from repo_manager import load_repos, clone_or_update_repo_async
 from lib_installer import *
+
+install_requirements_in_directory("C:/Apps")
+
+from PIL import Image
 
 def center_hub(window, width: int, height: int):
     """Centers the window to the main display/monitor"""
@@ -102,7 +105,7 @@ ctk.set_window_scaling(True)
 
 ensure_pip()
 # install_requirements_in_directory("C:/Apps/App_hub")
-install_requirements_in_directory("C:/Apps")
+
 app = App()
 center_hub(app, 350, 350)
 app.mainloop()
