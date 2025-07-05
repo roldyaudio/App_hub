@@ -5,7 +5,7 @@ from lib_installer import *
 
 ensure_pip()
 install_requirements_in_directory("C:/Apps")
-install_requirements_in_directory("C:/Apps/App_hub")
+# install_requirements_in_directory("C:/Apps/App_hub")
 
 import customtkinter as ctk
 from PIL import Image
