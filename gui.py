@@ -1,4 +1,3 @@
-import customtkinter as ctk
 import subprocess
 import sys
 from repo_manager import load_repos, clone_or_update_repo_async
@@ -8,6 +7,7 @@ ensure_pip()
 install_requirements_in_directory("C:/Apps")
 install_requirements_in_directory("C:/Apps/App_hub")
 
+import customtkinter as ctk
 from PIL import Image
 
 def center_hub(window, width: int, height: int):
