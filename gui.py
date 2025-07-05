@@ -4,7 +4,9 @@ import sys
 from repo_manager import load_repos, clone_or_update_repo_async
 from lib_installer import *
 
+ensure_pip()
 install_requirements_in_directory("C:/Apps")
+install_requirements_in_directory("C:/Apps/App_hub")
 
 from PIL import Image
 
@@ -102,9 +104,6 @@ ctk.set_appearance_mode("dark")
 ctk.set_default_color_theme("dark-blue")
 ctk.set_widget_scaling(True)
 ctk.set_window_scaling(True)
-
-ensure_pip()
-# install_requirements_in_directory("C:/Apps/App_hub")
 
 app = App()
 center_hub(app, 350, 350)
