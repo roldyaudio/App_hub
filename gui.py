@@ -101,7 +101,7 @@ ctk.set_widget_scaling(True)
 ctk.set_window_scaling(True)
 
 ensure_pip()
-install_requirements_in_directory("C:/Apps")
+install_requirements_in_directory("C:/00_repos/App_hub")
 app = App()
 center_hub(app, 350, 350)
 app.mainloop()
