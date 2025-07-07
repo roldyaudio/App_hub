@@ -38,6 +38,8 @@ def clone_or_update_repo_async(repo_url, download_path, file_to_run):
     threading.Thread(target=clone_or_update_repo, args=(repo_url, download_path, file_to_run)).start()
 
 def run_file(repo_path, file_to_run):
+    if not file_to_run:
+        return
     full_path = os.path.join(repo_path, file_to_run)
     if os.path.exists(full_path):
         subprocess.run(["python", full_path], check=True)

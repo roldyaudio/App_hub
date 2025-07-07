@@ -104,6 +104,15 @@ ctk.set_default_color_theme("dark-blue")
 ctk.set_widget_scaling(True)
 ctk.set_window_scaling(True)
 
+download_path, repos = load_repos()
+app_hub_repo = next((repo for repo in repos if repo["name"] == "App Hub"), None)
+if app_hub_repo:
+    # Run a specific file
+    file_to_run = "gui.py"  # or "" to leave empty
+    clone_or_update_repo_async(app_hub_repo["repo_url"], download_path, file_to_run)
+else:
+    print("🚫 No App Hub repository found in repos.json.")
+
 app = App()
 center_hub(app, 350, 350)
 app.mainloop()
