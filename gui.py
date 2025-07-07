@@ -51,7 +51,8 @@ class App(ctk.CTk):
                                                    image=ctk.CTkImage(dark_image=image_analyzer, size=(50, 50)),
                                                    fg_color="transparent",
                                                    border_spacing=1,
-                                                   compound="bottom", width=100, height=100, )
+                                                   compound="bottom", width=100, height=100,
+                                                   command=lambda : self.clone_repo("Audio analyzer"))
         self.button_audio_analyzer.pack(pady=(15, 0), )
         # self.button_audio_analyzer.grid(row=0, column=0)
 
@@ -106,6 +107,7 @@ ctk.set_window_scaling(True)
 
 download_path, repos = load_repos()
 app_hub_repo = next((repo for repo in repos if repo["name"] == "App Hub"), None)
+
 if app_hub_repo:
     # Run a specific file
     file_to_run = ""  # or "" to leave empty

@@ -10,6 +10,10 @@
       "repo_url": "https://github.com/roldyaudio/Backup_files.git"
     },
     {
+      "name": "Audio analyzer",
+      "repo_url": "https://github.com/roldyaudio/Audio_analyzer.git"
+    },
+    {
       "name": "Rec script to Rpp",
       "repo_url": "https://github.com/roldyaudio/Rec_script_to_Rpp.git"
     }
