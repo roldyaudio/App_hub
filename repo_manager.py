@@ -34,8 +34,10 @@ def clone_or_update_repo(repo_url, download_path, file_to_run):
     except Exception as e:
         print(f"An unexpected error occurred: {e}")
 
+
 def clone_or_update_repo_async(repo_url, download_path, file_to_run):
     threading.Thread(target=clone_or_update_repo, args=(repo_url, download_path, file_to_run)).start()
+
 
 def run_file(repo_path, file_to_run):
     if not file_to_run:
@@ -45,3 +47,4 @@ def run_file(repo_path, file_to_run):
         subprocess.run(["python", full_path], check=True)
     else:
         print(f"File {full_path} does not exist.")
+        

@@ -4,7 +4,7 @@ from repo_manager import load_repos, clone_or_update_repo_async
 from lib_installer import *
 
 ensure_pip()
-install_requirements_in_directory("C:/Apps")
+install_requirements_in_directory("C:/Apps/App_hub")
 
 import customtkinter as ctk
 from PIL import Image
@@ -108,7 +108,7 @@ download_path, repos = load_repos()
 app_hub_repo = next((repo for repo in repos if repo["name"] == "App Hub"), None)
 if app_hub_repo:
     # Run a specific file
-    file_to_run = "gui.py"  # or "" to leave empty
+    file_to_run = ""  # or "" to leave empty
     clone_or_update_repo_async(app_hub_repo["repo_url"], download_path, file_to_run)
 else:
     print("🚫 No App Hub repository found in repos.json.")
