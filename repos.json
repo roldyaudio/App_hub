@@ -2,6 +2,10 @@
   "download_path": "C:/Apps",
   "repos": [
     {
+      "name": "App Hub",
+      "repo_url": "https://github.com/roldyaudio/App_hub.git"
+    },
+    {
       "name": "Backup files",
       "repo_url": "https://github.com/roldyaudio/Backup_files.git"
     },
