@@ -83,7 +83,7 @@ class App(ctk.CTk):
 
         # Buttons Tab_3
             # BACKUP
-        image_backup = Image.open("resources/ffmpeg_icon.png.png")
+        image_backup = Image.open("resources/ffmpeg_icon.png")
         self.backup_files = ctk.CTkButton(master=self.tab_view.tab("Download"),
                                          text="Backup files",
                                          image=ctk.CTkImage(dark_image=image_backup, size=(50, 50)),
