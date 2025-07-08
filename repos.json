@@ -6,8 +6,8 @@
       "repo_url": "https://github.com/roldyaudio/App_hub.git"
     },
     {
-      "name": "Backup files",
-      "repo_url": "https://github.com/roldyaudio/Backup_files.git"
+      "name": "ffmpeg",
+      "repo_url": "https://github.com/roldyaudio/ffmpeg_installer.git"
     },
     {
       "name": "Audio analyzer",

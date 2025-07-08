@@ -25,7 +25,7 @@ class MyTabs(ctk.CTkTabview):
         # create tabs
         self.add("Audio")
         self.add("Reaper Tools")
-        self.add("Backup")
+        self.add("Download")
 
 
 class App(ctk.CTk):
@@ -83,8 +83,8 @@ class App(ctk.CTk):
 
         # Buttons Tab_3
             # BACKUP
-        image_backup = Image.open("resources/backup_icon.png")
-        self.backup_files = ctk.CTkButton(master=self.tab_view.tab("Backup"),
+        image_backup = Image.open("resources/ffmpeg_icon.png.png")
+        self.backup_files = ctk.CTkButton(master=self.tab_view.tab("Download"),
                                          text="Backup files",
                                          image=ctk.CTkImage(dark_image=image_backup, size=(50, 50)),
                                          fg_color="transparent",
@@ -96,7 +96,7 @@ class App(ctk.CTk):
     def clone_repo(self, app_name):
         for repo in self.repos:
             if repo["name"] == app_name:
-                clone_or_update_repo_async(repo["repo_url"], self.download_path, file_to_run="gui.py")
+                clone_or_update_repo_async(repo["repo_url"], self.download_path, file_to_run="main.py")
                 break
 
 
