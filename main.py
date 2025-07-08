@@ -85,7 +85,7 @@ class App(ctk.CTk):
             # DOWNLOAD
         image_backup = Image.open("resources/ffmpeg_icon.png")
         self.backup_files = ctk.CTkButton(master=self.tab_view.tab("Download"),
-                                         text="Backup files",
+                                         text="ffmpeg Installer",
                                          image=ctk.CTkImage(dark_image=image_backup, size=(50, 50)),
                                          fg_color="transparent",
                                          border_spacing=1,
