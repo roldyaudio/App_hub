@@ -82,7 +82,7 @@ class App(ctk.CTk):
         # self.item_editor.grid(row=0, column=2, pady=15, )
 
         # Buttons Tab_3
-            # BACKUP
+            # DOWNLOAD
         image_backup = Image.open("resources/ffmpeg_icon.png")
         self.backup_files = ctk.CTkButton(master=self.tab_view.tab("Download"),
                                          text="Backup files",
@@ -90,7 +90,7 @@ class App(ctk.CTk):
                                          fg_color="transparent",
                                          border_spacing=1,
                                          compound="bottom", width=100, height=100,
-                                          command=lambda : self.clone_repo("Backup files"))
+                                          command=lambda : self.clone_repo("ffmpeg Installer"))
         self.backup_files.pack(pady=(15, 0), )
 
     def clone_repo(self, app_name):
