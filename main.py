@@ -96,7 +96,7 @@ class App(ctk.CTk):
     def clone_repo(self, app_name):
         for repo in self.repos:
             if repo["name"] == app_name:
-                clone_or_update_repo(repo["repo_url"], self.download_path, file_to_run="main.py")
+                clone_or_update_repo_async(repo["repo_url"], self.download_path, file_to_run="main.py")
                 break
 
 
