@@ -6,11 +6,11 @@ import time
 def ensure_pip():
     try:
         import pip
-        print("✅ pip is already installed.")
+        print("\e[1;32mpip is already installed.\e[0m")
     except ImportError:
-        print("⚠️ pip not found. Installing with ensurepip...")
+        print("pip not found. Installing with ensurepip...")
         subprocess.check_call([sys.executable, "-m", "ensurepip"])
-        print("✅ pip installed successfully.")
+        print("pip installed successfully.")
 
 
 def install_requirements_in_directory(base_dir):
