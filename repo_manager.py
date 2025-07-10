@@ -26,7 +26,7 @@ def clone_or_update_repo(repo_url, download_path, file_to_run):
             result = subprocess.run(["git", "-C", repo_path, "pull"], capture_output=True, text=True)
             if result.returncode == 0:
                 print(f"Repository {repo_url} updated successfully.")
-                # restart_program()
+                restart_program()
             else:
                 print(f"Error updating repository: {result.stderr}")
             run_file(repo_path, file_to_run)  # Run the file after updating
@@ -36,7 +36,7 @@ def clone_or_update_repo(repo_url, download_path, file_to_run):
             if result.returncode == 0:
                 print(f"Repository {repo_url} cloned successfully to {repo_path}.")
                 run_file(repo_path, file_to_run)  # si lo sigues queriendo ejecutar ahora
-                restart_program()
+                #restart_program()
             else:
                 print(f"Error cloning repository: {result.stderr}")
     except Exception as e:
