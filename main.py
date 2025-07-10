@@ -96,7 +96,7 @@ class App(ctk.CTk):
     def clone_repo(self, app_name):
         for repo in self.repos:
             if repo["name"] == app_name:
-                clone_or_update_repo(repo["repo_url"], self.download_path, file_to_run="main.py")
+                clone_or_update_repo_async(repo["repo_url"], self.download_path, file_to_run="main.py")
                 break
 
 
@@ -111,7 +111,7 @@ app_hub_repo = next((repo for repo in repos if repo["name"] == "App Hub"), None)
 if app_hub_repo:
     # Run a specific file
     file_to_run = ""  # or "" to leave empty
-    clone_or_update_repo_async(app_hub_repo["repo_url"], download_path, file_to_run)
+    clone_or_update_repo(app_hub_repo["repo_url"], download_path, file_to_run)
 else:
     print("🚫 No App Hub repository found in repos.json.")
 
