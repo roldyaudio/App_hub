@@ -11,11 +11,6 @@ def load_repos():
         return data["download_path"], data["repos"]
 
 
-def restart_program():
-    print("🔄 Restarting program to load new changes...")
-    os.execv(sys.executable, ['python'] + sys.argv)
-
-
 def clone_or_update_repo(repo_url, download_path, file_to_run):
     try:
         repo_name = repo_url.split('/')[-1].replace('.git', '')
