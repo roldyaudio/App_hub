@@ -20,23 +20,20 @@ def clone_or_update_repo(repo_url, download_path, file_to_run):
             # Pull updates if the repository exists
             result = subprocess.run(["git", "-C", repo_path, "pull"], capture_output=True, text=True)
             if result.returncode == 0:
-                print(f"Repository {repo_url} updated successfully.")
+                print(f"✅ Repository {repo_url} updated successfully.")
                 run_file(repo_path, file_to_run)
-                #restart_program()
             else:
-                print(f"Error updating repository: {result.stderr}")
-            #run_file(repo_path, file_to_run)  # Run the file after updating
+                print(f"❌ Error updating repository: {result.stderr}")
         else:
             # Clone the repository if it doesn't exist
             result = subprocess.run(["git", "clone", repo_url, repo_path], capture_output=True, text=True)
             if result.returncode == 0:
-                print(f"Repository {repo_url} cloned successfully to {repo_path}.")
-                run_file(repo_path, file_to_run)  # si lo sigues queriendo ejecutar ahora
-                #restart_program()
+                print(f"✅ Repository {repo_url} cloned successfully to {repo_path}.")
+                run_file(repo_path, file_to_run)
             else:
-                print(f"Error cloning repository: {result.stderr}")
+                print(f"❌ Error cloning repository: {result.stderr}")
     except Exception as e:
-        print(f"An unexpected error occurred: {e}")
+        print(f"⚠ An unexpected error occurred: {e}")
 
 
 def clone_or_update_repo_async(repo_url, download_path, file_to_run):
@@ -48,10 +45,10 @@ def run_file(repo_path, file_to_run):
         return
     full_path = os.path.join(repo_path, file_to_run)
     if os.path.exists(full_path):
-        # Verifica si el script pertenece al mismo repo del hub
         current_dir = os.path.dirname(os.path.abspath(__file__))
+        # Verificar si es el mismo directorio donde se ejecuta el hub
         if os.path.samefile(repo_path, current_dir):
-            print(f"🔄 Updating hub itself. Restarting with {full_path}...")
+            print(f"🔄 Repo is the hub itself. Restarting with updated code: {full_path}")
             os.execv(sys.executable, ['python', full_path])
         else:
             print(f"🚀 Launching external app: {full_path}")
