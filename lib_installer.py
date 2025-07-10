@@ -6,7 +6,7 @@ import time
 def ensure_pip():
     try:
         import pip
-        print("\e[1;32mpip is already installed.\e[1;0m")
+        print("\x1b[31mpip is already installed.\x1b[0m")
     except ImportError:
         print("pip not found. Installing with ensurepip...")
         subprocess.check_call([sys.executable, "-m", "ensurepip"])
