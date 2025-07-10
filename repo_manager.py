@@ -29,13 +29,13 @@ def clone_or_update_repo(repo_url, download_path, file_to_run):
                 # restart_program()
             else:
                 print(f"Error updating repository: {result.stderr}")
-            # run_file(repo_path, file_to_run)  # Run the file after updating
+            run_file(repo_path, file_to_run)  # Run the file after updating
         else:
             # Clone the repository if it doesn't exist
             result = subprocess.run(["git", "clone", repo_url, repo_path], capture_output=True, text=True)
             if result.returncode == 0:
                 print(f"Repository {repo_url} cloned successfully to {repo_path}.")
-                run_file(repo_path, file_to_run)  # si lo sigues queriendo ejecutar ahora
+                #run_file(repo_path, file_to_run)  # si lo sigues queriendo ejecutar ahora
                 restart_program()
             else:
                 print(f"Error cloning repository: {result.stderr}")
