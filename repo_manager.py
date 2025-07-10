@@ -26,10 +26,11 @@ def clone_or_update_repo(repo_url, download_path, file_to_run):
             result = subprocess.run(["git", "-C", repo_path, "pull"], capture_output=True, text=True)
             if result.returncode == 0:
                 print(f"Repository {repo_url} updated successfully.")
+                run_file(repo_path, file_to_run)
                 #restart_program()
             else:
                 print(f"Error updating repository: {result.stderr}")
-            run_file(repo_path, file_to_run)  # Run the file after updating
+            #run_file(repo_path, file_to_run)  # Run the file after updating
         else:
             # Clone the repository if it doesn't exist
             result = subprocess.run(["git", "clone", repo_url, repo_path], capture_output=True, text=True)
@@ -52,7 +53,7 @@ def run_file(repo_path, file_to_run):
         return
     full_path = os.path.join(repo_path, file_to_run)
     if os.path.exists(full_path):
-        subprocess.run(["python", full_path], check=True)
+        print(f"🚀 Executing {full_path}...")
+        os.execv(sys.executable, ['python', full_path])
     else:
         print(f"File {full_path} does not exist.")
-        
