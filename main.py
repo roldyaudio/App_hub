@@ -1,6 +1,6 @@
 import subprocess
 import sys
-from repo_manager import load_repos, clone_or_update_repo_async
+from repo_manager import *
 from lib_installer import *
 
 ensure_pip()
