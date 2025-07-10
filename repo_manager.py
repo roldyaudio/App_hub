@@ -48,7 +48,13 @@ def run_file(repo_path, file_to_run):
         return
     full_path = os.path.join(repo_path, file_to_run)
     if os.path.exists(full_path):
-        print(f"🚀 Executing {full_path}...")
-        os.execv(sys.executable, ['python', full_path])
+        # Verifica si el script pertenece al mismo repo del hub
+        current_dir = os.path.dirname(os.path.abspath(__file__))
+        if os.path.samefile(repo_path, current_dir):
+            print(f"🔄 Updating hub itself. Restarting with {full_path}...")
+            os.execv(sys.executable, ['python', full_path])
+        else:
+            print(f"🚀 Launching external app: {full_path}")
+            subprocess.Popen(['python', full_path])
     else:
-        print(f"File {full_path} does not exist.")
+        print(f"⚠ File {full_path} does not exist.")
