@@ -6,7 +6,7 @@ import time
 def ensure_pip():
     try:
         import pip
-        print("\x1b[31mpip is already installed.\x1b[0m")
+        print("\x1b[0;32mpip is already installed.\x1b[0m")
     except ImportError:
         print("pip not found. Installing with ensurepip...")
         subprocess.check_call([sys.executable, "-m", "ensurepip"])
@@ -42,6 +42,6 @@ if __name__ == "__main__":
         
     print("🔧 Checking pip...")
     ensure_pip()
-    print("🚀 Processing requirements.txt in current folder...")
+    print("Processing requirements.txt in current folder...")
     install_requirements_in_directory("C:/Apps/App_hub")
     print("✅ Process completed.")
