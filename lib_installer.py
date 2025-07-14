@@ -19,6 +19,12 @@ def install_requirements_in_directory(base_dir):
     print("\n🔧 Ensuring latest setuptools...")
     subprocess.run([sys.executable, "-m", "pip", "install", "-U", "setuptools"])
 
+    if result.returncode != 0:
+        print(":x: Error updating setuptools")
+        sys.exit(1)
+    elif result.returncode == 0:
+        updated = True
+
     # Walk through all folders looking for requirements.txt files
     for root, dirs, files in os.walk(base_dir):
         for file in files:
@@ -34,6 +40,7 @@ def install_requirements_in_directory(base_dir):
 
                 if result.returncode == 0:
                     print(f"✅ Successfully installed from {req_path}")
+                    updated = True
                 else:
                     print(f"❌ Error installing from {req_path}")
                     sys.exit(1)
