@@ -15,15 +15,15 @@ def ensure_pip():
 
 def install_requirements_in_directory(base_dir):
     # Always update setuptools first to ensure latest pkg_resources
-    print("\n:wrench: Ensuring latest setuptools...")
+    print("\n🔧 Ensuring latest setuptools...")
     subprocess.run([sys.executable, "-m", "pip", "install", "-U", "setuptools"])
     # Walk through all folders looking for requirements.txt files
     for root, dirs, files in os.walk(base_dir):
         for file in files:
             if file == "requirements.txt":
                 req_path = os.path.join(root, file)
-                print(f"\n:rocket: Installing dependencies from: {req_path}")
-                print(f":package: Running: {sys.executable} -m pip install -r {req_path}")
+                print(f"\n🚀 Installing dependencies from: {req_path}")
+                print(f"📦 Running: {sys.executable} -m pip install -r {req_path}")
                 # Run and show ALL output in real time
                 result = subprocess.run(
                     [sys.executable, "-m", "pip", "install", "-r", req_path]
