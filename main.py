@@ -98,7 +98,7 @@ class App(ctk.CTk):
                                          border_spacing=1,
                                          compound="bottom", width=100, height=100,
                                           command=lambda : self.clone_repo("ffmpeg Installer"))
-        self.backup_files.pack(pady=(15, 0), )
+        # self.backup_files.pack(pady=(15, 0), )
 
     def clone_repo(self, app_name):
         for repo in self.repos:
