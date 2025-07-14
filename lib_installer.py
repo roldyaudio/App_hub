@@ -14,6 +14,7 @@ def ensure_pip():
 
 
 def install_requirements_in_directory(base_dir):
+    updated = False
     # Always update setuptools first to ensure latest pkg_resources
     print("\n🔧 Ensuring latest setuptools...")
     subprocess.run([sys.executable, "-m", "pip", "install", "-U", "setuptools"])
@@ -36,6 +37,7 @@ def install_requirements_in_directory(base_dir):
                 else:
                     print(f"❌ Error installing from {req_path}")
                     sys.exit(1)
+    return updated
 
 
 if __name__ == "__main__":
