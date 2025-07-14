@@ -10,7 +10,7 @@ if updated:
     print("\n\x1b[0;36mRestarting the program to include updates...\x1b[0m")
     os.execv(sys.executable, [sys.executable] + sys.argv)
 else:
-    print("\nNo updates were made, continuing execution...")
+    print("\n\x1b[0;36mNo updates were made, continuing execution...\x1b[0m")
 
 
 import customtkinter as ctk
