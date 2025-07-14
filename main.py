@@ -4,7 +4,14 @@ from repo_manager import *
 from lib_installer import *
 
 ensure_pip()
-install_requirements_in_directory("C:/Apps/App_hub")
+updated = install_requirements_in_directory("C:/Apps/App_hub")
+
+if updated:
+    print("\n\e[1;36Restarting the program to include updates...\e[0m")
+        os.execv(sys.executable, [sys.executable] + sys.argv)
+    else:
+        print("\nNo updates were made, continuing execution...")
+
 
 import customtkinter as ctk
 from PIL import Image
@@ -114,6 +121,8 @@ if app_hub_repo:
     clone_or_update_repo(app_hub_repo["repo_url"], download_path, file_to_run)
 else:
     print("🚫 No App Hub repository found in repos.json.")
+
+print("VEREMOS SI LO PILLA DE UNA")
 
 app = App()
 center_hub(app, 350, 350)
