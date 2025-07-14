@@ -4,14 +4,7 @@ from repo_manager import *
 from lib_installer import *
 
 ensure_pip()
-updated = install_requirements_in_directory("C:/Apps/App_hub")
-
-if updated:
-    print("\n\x1b[0;36mRestarting the program to include updates...\x1b[0m")
-    os.execv(sys.executable, [sys.executable] + sys.argv)
-else:
-    print("\n\x1b[0;36mNo updates were made, continuing execution...\x1b[0m")
-
+install_requirements_in_directory("C:/Apps/App_hub")
 
 import customtkinter as ctk
 from PIL import Image
