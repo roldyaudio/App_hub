@@ -7,7 +7,7 @@ ensure_pip()
 updated = install_requirements_in_directory("C:/Apps/App_hub")
 
 if updated:
-    print("\n\e[1;36Restarting the program to include updates...\e[0m")
+    print("\n\x1b[0;36mRestarting the program to include updates...\x1b[0m")
     os.execv(sys.executable, [sys.executable] + sys.argv)
 else:
     print("\nNo updates were made, continuing execution...")
