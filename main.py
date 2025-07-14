@@ -8,9 +8,9 @@ updated = install_requirements_in_directory("C:/Apps/App_hub")
 
 if updated:
     print("\n\e[1;36Restarting the program to include updates...\e[0m")
-        os.execv(sys.executable, [sys.executable] + sys.argv)
-    else:
-        print("\nNo updates were made, continuing execution...")
+    os.execv(sys.executable, [sys.executable] + sys.argv)
+else:
+    print("\nNo updates were made, continuing execution...")
 
 
 import customtkinter as ctk
