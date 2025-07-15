@@ -58,7 +58,7 @@ class App(ctk.CTk):
 
         # Buttons Tab_2
             # RPP CREATOR BUTTON
-        image_reaper_creator = Image.open("resources/rpp_creator_icon.png")
+        image_reaper_creator = Image.open("resources/icons8_workflow.png")
 
         self.button_reaper_creator = ctk.CTkButton(master=self.tab_view.tab("Reaper Tools"),
                                                    text="Recording script to .rpp",
@@ -70,7 +70,7 @@ class App(ctk.CTk):
         self.button_reaper_creator.pack(pady=(15, 0),)
         # self.button_reaper_creator.grid(row=0, column=1, )
 
-            # ITEM NOTE CUSTOMIZER BUTTON
+            # ITEM NOTE EDITOR BUTTON
         image_item_editor = Image.open("resources/item_editor_icon.png")
         self.item_editor = ctk.CTkButton(master=self.tab_view.tab("Reaper Tools"),
                                          text="Item notes\nEditor",
