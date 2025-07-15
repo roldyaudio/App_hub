@@ -61,7 +61,7 @@ class App(ctk.CTk):
         image_reaper_creator = Image.open("resources/icons8_workflow.png")
 
         self.button_reaper_creator = ctk.CTkButton(master=self.tab_view.tab("Reaper Tools"),
-                                                   text="Recording script to .rpp",
+                                                   text="Reaper project\nCreator",
                                                    image=ctk.CTkImage(dark_image=image_reaper_creator, size=(50, 50)),
                                                    fg_color="transparent",
                                                    border_spacing=1,
