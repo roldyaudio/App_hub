@@ -45,7 +45,7 @@ class App(ctk.CTk):
 
         # Buttons in Tab_1
             # AUDIO ANALYZER BUTTON
-        image_analyzer = Image.open("resources/analyzer_icon.png")
+        image_analyzer = Image.open("resources/icons8_microscope.png")
         self.button_audio_analyzer = ctk.CTkButton(master=self.tab_view.tab("Audio"),
                                                    text="Audio analyzer",
                                                    image=ctk.CTkImage(dark_image=image_analyzer, size=(50, 50)),
@@ -71,7 +71,7 @@ class App(ctk.CTk):
         # self.button_reaper_creator.grid(row=0, column=1, )
 
             # ITEM NOTE EDITOR BUTTON
-        image_item_editor = Image.open("resources/item_editor_icon.png")
+        image_item_editor = Image.open("resources/icons8_note_editor.png")
         self.item_editor = ctk.CTkButton(master=self.tab_view.tab("Reaper Tools"),
                                          text="Item notes\nEditor",
                                          image=ctk.CTkImage(dark_image=image_item_editor, size=(50, 50)),
