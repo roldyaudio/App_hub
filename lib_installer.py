@@ -29,9 +29,9 @@ def install_requirements_in_directory(base_dir):
                     [sys.executable, "-m", "pip", "install", "-r", req_path]
                 )
                 if result.returncode == 0:
-                    print(f":white_check_mark: Successfully installed from {req_path}")
+                    print(f"✅ Successfully installed from {req_path}")
                 else:
-                    print(f":x: Error installing from {req_path}")
+                    print(f"❌ Error installing from {req_path}")
                     sys.exit(1)
 
 
