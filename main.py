@@ -110,7 +110,7 @@ app_hub_repo = next((repo for repo in repos if repo["name"] == "App Hub"), None)
 
 if app_hub_repo:
     # Run a specific file
-    file_to_run = ""  # or "" to leave empty
+    file_to_run = "main.py"  # or "" to leave empty
     clone_or_update_repo(app_hub_repo["repo_url"], download_path, file_to_run)
 else:
     print("🚫 No App Hub repository found in repos.json.")
