@@ -78,7 +78,7 @@ class App(ctk.CTk):
                                          fg_color="transparent",
                                          border_spacing=1,
                                          compound="bottom", width=100, height=100, )
-        # self.item_editor.pack(pady=(15, 0),)
+        self.item_editor.pack(pady=(15, 0),)
         # self.item_editor.grid(row=0, column=2, pady=15, )
 
         # Buttons Tab_3
