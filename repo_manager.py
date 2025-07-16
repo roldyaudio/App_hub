@@ -23,6 +23,13 @@ def clone_or_update_repo(repo_url, download_path, file_to_run):
                 print(f"✅ Repository {repo_url} updated successfully.")
                 print("🚀\x1b[0;36mApp Hub Launcher has updated to the most recent version. Please relaunch to apply changes.\x1b[0m")
                 run_file(repo_path, file_to_run)
+                output = result.stdout + result.stderr
+                if "Already up to date." in output or "up to date" in output.lower():
+                    print(f"✅ Repository {repo_url} is already up to date.")
+                else:
+                    print(f"✅ Repository {repo_url} updated successfully.")
+                    print("🚀\x1b[0;36m App Hub Launcher has updated to the most recent version. Please relaunch to apply changes.\x1b[0m")
+                run_file(repo_path, file_to_run)
             else:
                 print(f"❌ Error updating repository: {result.stderr}")
         else:
