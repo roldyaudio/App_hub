@@ -5,6 +5,7 @@ from lib_installer import *
 
 ensure_pip()
 install_requirements_in_directory("C:/Apps/App_hub")
+print("Testing los commits pa ver")
 
 import customtkinter as ctk
 from PIL import Image
