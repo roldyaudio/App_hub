@@ -21,7 +21,7 @@ def clone_or_update_repo(repo_url, download_path, file_to_run):
             result = subprocess.run(["git", "-C", repo_path, "pull"], capture_output=True, text=True)
             if result.returncode == 0:
                 print(f"✅ Repository {repo_url} updated successfully.")
-                print("🚀 App Hub Launcher has updated to the most recent version. Please relaunch to apply changes.")
+                print("🚀\x1b[0;36mApp Hub Launcher has updated to the most recent version. Please relaunch to apply changes.\x1b[0m")
                 run_file(repo_path, file_to_run)
             else:
                 print(f"❌ Error updating repository: {result.stderr}")
