@@ -17,21 +17,43 @@ def clone_or_update_repo(repo_url, download_path, file_to_run):
         repo_path = os.path.join(download_path, repo_name)
 
         if os.path.exists(repo_path):
-            # Pull updates if the repository exists
-            result = subprocess.run(["git", "-C", repo_path, "pull"], capture_output=True, text=True)
-            if result.returncode == 0:
-                print(f"✅ Repository {repo_url} updated successfully.")
-                # run_file(repo_path, file_to_run)
+            # Fetch remote updates
+            fetch_result = subprocess.run(["git", "-C", repo_path, "fetch"], capture_output=True, text=True)
+            if fetch_result.returncode != 0:
+                print(f"⚠ Failed to fetch updates: {fetch_result.stderr}")
+                return
+
+            # Check if local HEAD is behind remote
+            local_rev = subprocess.run(["git", "-C", repo_path, "rev-parse", "HEAD"], capture_output=True, text=True)
+            remote_rev = subprocess.run(["git", "-C", repo_path, "rev-parse", "@{u}"], capture_output=True, text=True)
+
+            if local_rev.returncode != 0 or remote_rev.returncode != 0:
+                print("⚠ Could not determine repository revision. Skipping update check.")
+                return
+
+            local_hash = local_rev.stdout.strip()
+            remote_hash = remote_rev.stdout.strip()
+
+            if local_hash != remote_hash:
+                # Updates available
+                pull_result = subprocess.run(["git", "-C", repo_path, "pull"], capture_output=True, text=True)
+                if pull_result.returncode == 0:
+                    print("🚀 \x1b[0;36mApp Hub Launcher has updated to the most recent version. Please relaunch to see the new features.\x1b[0m")
+                    # run_file(repo_path, file_to_run)
+                else:
+                    print(f"❌ Error updating repository: {pull_result.stderr}")
             else:
-                print(f"❌ Error updating repository: {result.stderr}")
+                # Up to date
+                print("✅ App Hub Launcher is already up to date.")
         else:
             # Clone the repository if it doesn't exist
-            result = subprocess.run(["git", "clone", repo_url, repo_path], capture_output=True, text=True)
-            if result.returncode == 0:
+            clone_result = subprocess.run(["git", "clone", repo_url, repo_path], capture_output=True, text=True)
+            if clone_result.returncode == 0:
                 print(f"✅ Repository {repo_url} cloned successfully to {repo_path}.")
                 run_file(repo_path, file_to_run)
             else:
-                print(f"❌ Error cloning repository: {result.stderr}")
+                print(f"❌ Error cloning repository: {clone_result.stderr}")
+
     except Exception as e:
         print(f"⚠ An unexpected error occurred: {e}")
 
