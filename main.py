@@ -56,6 +56,18 @@ class App(ctk.CTk):
         self.button_audio_analyzer.pack(pady=(15, 0), )
         # self.button_audio_analyzer.grid(row=0, column=0)
 
+            # SPEECH 2 TEXT TRANSCRIBER
+        image_item_editor = Image.open("resources/s2tt.png")
+        self.item_editor = ctk.CTkButton(master=self.tab_view.tab("Audio"),
+                                         text="S2T\nTranscriber",
+                                         image=ctk.CTkImage(dark_image=image_item_editor, size=(50, 50)),
+                                         fg_color="transparent",
+                                         border_spacing=1,
+                                         compound="bottom", width=100, height=100,
+                                         command=lambda : self.clone_repo("Speech 2 Text Transcriber")))
+        self.item_editor.pack(pady=(15, 0),)
+        # self.item_editor.grid(row=0, column=2, pady=15, )
+
         # Buttons Tab_2
             # RPP CREATOR BUTTON
         image_reaper_creator = Image.open("resources/icons8_workflow.png")
@@ -70,16 +82,7 @@ class App(ctk.CTk):
         self.button_reaper_creator.pack(pady=(15, 0),)
         # self.button_reaper_creator.grid(row=0, column=1, )
 
-            # ITEM NOTE EDITOR BUTTON
-        image_item_editor = Image.open("resources/icons8_note_editor.png")
-        self.item_editor = ctk.CTkButton(master=self.tab_view.tab("Reaper Tools"),
-                                         text="Item notes\nEditor",
-                                         image=ctk.CTkImage(dark_image=image_item_editor, size=(50, 50)),
-                                         fg_color="transparent",
-                                         border_spacing=1,
-                                         compound="bottom", width=100, height=100, )
-        self.item_editor.pack(pady=(15, 0),)
-        # self.item_editor.grid(row=0, column=2, pady=15, )
+            
 
         # Buttons Tab_3
             # DOWNLOAD
