@@ -59,7 +59,7 @@ class App(ctk.CTk):
             # SPEECH 2 TEXT TRANSCRIBER
         image_item_editor = Image.open("resources/s2tt.png")
         self.item_editor = ctk.CTkButton(master=self.tab_view.tab("Audio"),
-                                         text="S2T\nTranscriber",
+                                         text="ES 2 T\nTranscriber",
                                          image=ctk.CTkImage(dark_image=image_item_editor, size=(50, 50)),
                                          fg_color="transparent",
                                          border_spacing=1,
