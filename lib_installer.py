@@ -3,12 +3,12 @@ import subprocess
 import sys
 
 def ensure_pip():
-    """Checks if pip is installed; if not, installs it using ensurepip."""
     try:
-        import pip
-        print("\x1b[0;32m[OK]\x1b[0m pip is already installed.")
-    except ImportError:
-        print("pip not found. Installing with ensurepip...")
+        subprocess.run([sys.executable, "-m", "pip", "--version"], 
+                       check=True, capture_output=True)
+        print("\x1b[0;32m[OK]\x1b[0m pip is ready.")
+    except (subprocess.CalledProcessError, FileNotFoundError):
+        print("pip not found. Installing...")
         subprocess.check_call([sys.executable, "-m", "ensurepip"])
 
 def install_requirements_in_directory(base_dir):
