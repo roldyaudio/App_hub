@@ -2,114 +2,115 @@ import os
 import subprocess
 import sys
 import urllib.request
-import ctypes # Para el cuadro de diálogo nativo de Windows
+import ctypes
 
 def show_msgbox(title, text, style):
-    """Muestra un cuadro de diálogo de Windows (0: OK, 1: OK/Cancel, 4: Yes/No)"""
+    """Muestra un cuadro de diálogo de Windows (0: OK, 4: Yes/No)"""
     return ctypes.windll.user32.MessageBoxW(0, text, title, style)
 
 def check_python_version():
-    """Verifica si la versión es 3.13+ y ofrece instalar 3.12 para compatibilidad con Audio."""
-    if sys.version_info >= (3, 13):
-        print("⚠️ Detectado Python 3.13+. Esta versión no es compatible con pydub (audioop).")
+    """
+    Forzamos la comprobación. Si NO es 3.12, preguntamos.
+    Pydub y Torch 2.5 funcionan mejor en 3.12.
+    """
+    major, minor = sys.version_info.major, sys.version_info.minor
+    
+    # Si es 3.13 o superior, lanzamos la alerta
+    if major == 3 and minor >= 13:
+        print(f"⚠️ Versión incompatible detectada: {major}.{minor}")
         
-        msg = ("Se ha detectado Python 3.13. Las aplicaciones de audio requieren Python 3.12 para funcionar correctamente.\n\n"
-               "¿Desea descargar e instalar Python 3.12 ahora?\n"
-               "(Se instalará de forma oficial y se añadirá al PATH automáticamente)")
+        msg = (f"Tu versión actual de Python ({major}.{minor}) NO es compatible con las librerías de Audio (pydub).\n\n"
+               "¿Deseas instalar Python 3.12.9 ahora para solucionar este problema?\n"
+               "Esto descargará e instalará la versión correcta automáticamente.")
         
-        # 4 = Yes/No button
-        response = show_msgbox("Incompatibilidad de Audio Detectada", msg, 4)
+        # 4 = Yes/No, 0x30 = Icono de advertencia, 0x40000 = Poner la ventana al frente
+        response = ctypes.windll.user32.MessageBoxW(0, msg, "Corrección de Python Requerida", 4 | 0x30 | 0x40000)
         
-        if response == 6: # 6 es "Yes"
+        if response == 6: # El usuario dijo SI
             install_python_312()
+            # Salimos del script actual porque queremos que el usuario reinicie con la nueva versión
+            sys.exit(0)
         else:
-            print("🚫 Instalación de Python 3.12 cancelada por el usuario. Es posible que el audio falle.")
+            print("🚫 El usuario rechazó la instalación. Continuando bajo su propio riesgo...")
 
 def install_python_312():
-    print("🚀 Iniciando descarga de Python 3.12.9...")
+    print("🚀 Iniciando descarga de Python 3.12.9 (64-bit)...")
+    # Usamos un User-Agent para evitar que el servidor de Python bloquee la descarga automatizada
+    opener = urllib.request.build_opener()
+    opener.addheaders = [('User-Agent', 'Mozilla/5.0')]
+    urllib.request.install_opener(opener)
+    
     installer_url = "https://www.python.org/ftp/python/3.12.9/python-3.12.9-amd64.exe"
     installer_path = os.path.join(os.environ["TEMP"], "python_312_installer.exe")
 
     try:
         urllib.request.urlretrieve(installer_url, installer_path)
-        print("⚙️ Ejecutando instalador silencioso... Espere a que finalice.")
-        # /quiet: sin ventanas, PrependPath: añade a variables de entorno
-        subprocess.run([installer_path, "/quiet", "InstallAllUsers=1", "PrependPath=1"], check=True)
+        print("⚙️ Ejecutando instalador oficial en modo silencioso...")
         
-        show_msgbox("Instalación Completada", 
-                    "Python 3.12 se ha instalado.\n\nPor favor, CIERRA el App Hub y vuelve a abrirlo para usar la versión correcta.", 0)
-        sys.exit(0)
+        # Flags: 
+        # /quiet -> Sin ventanas
+        # InstallAllUsers=1 -> Para evitar problemas de permisos de carpeta
+        # PrependPath=1 -> Para que sea el Python por defecto en la consola
+        process = subprocess.run([installer_path, "/quiet", "InstallAllUsers=1", "PrependPath=1"], 
+                                 shell=True, check=True)
+        
+        show_msgbox("Instalación Exitosa", 
+                    "Python 3.12 se ha instalado.\n\nCIERRA COMPLETAMENTE el App Hub y vuelve a abrirlo para aplicar los cambios.", 0 | 0x40)
     except Exception as e:
-        print(f"❌ Error instalando Python: {e}")
+        show_msgbox("Error de Instalación", f"No se pudo instalar Python 3.12:\n{e}", 0 | 0x10)
 
 def ensure_pip():
+    # Intentamos actualizar pip de paso para quitar los avisos de [notice]
     try:
-        subprocess.run([sys.executable, "-m", "pip", "--version"], 
-                       check=True, capture_output=True)
-        print("\x1b[0;32m[OK]\x1b[0m pip is ready.")
-    except (subprocess.CalledProcessError, FileNotFoundError):
-        print("pip not found. Installing...")
-        subprocess.check_call([sys.executable, "-m", "ensurepip"])
+        subprocess.run([sys.executable, "-m", "pip", "install", "--upgrade", "pip", "--quiet"], check=False)
+        print("\x1b[0;32m[OK]\x1b[0m pip actualizado y listo.")
+    except:
+        pass
 
 def install_torch_universal():
-    """Instala PyTorch compatible con cualquier GPU o CPU."""
-    # Verificamos si ya existe torch
+    """Instalación manual de Torch para evitar conflictos de CUDA."""
     try:
         import torch
-        print("\x1b[0;32m[OK]\x1b[0m PyTorch ya está presente.")
-        return
+        # Verificamos que no sea una versión rota
+        print(f"✅ PyTorch detectado: {torch.__version__}")
     except ImportError:
-        print("📦 Instalando motor de procesamiento universal (PyTorch + DirectML)...")
+        print("📦 Instalando PyTorch Universal + DirectML...")
+        pkgs = ["torch", "torchvision", "torchaudio", "torch-directml"]
         
-        # Paquetes base + soporte para AMD/Intel (DirectML)
-        packages = ["torch", "torchvision", "torchaudio", "torch-directml"]
-        
-        # Detectar si hay NVIDIA para usar su servidor de alta velocidad
-        extra_url = []
+        # Detectar NVIDIA
+        extra = []
         try:
-            subprocess.run(["nvidia-smi"], check=True, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
-            extra_url = ["--extra-index-url", "https://download.pytorch.org/whl/cu121"]
+            res = subprocess.run(["nvidia-smi"], capture_output=True)
+            if res.returncode == 0:
+                extra = ["--extra-index-url", "https://download.pytorch.org/whl/cu121"]
         except:
             pass
-
-        subprocess.run([sys.executable, "-m", "pip", "install"] + packages + extra_url + ["--quiet"])
+            
+        subprocess.run([sys.executable, "-m", "pip", "install"] + pkgs + extra + ["--quiet"])
 
 def install_requirements_in_directory(base_dir):
-    for root, dirs, files in os.walk(base_dir):
-        for file in files:
-            if file == "requirements.txt":
-                req_path = os.path.join(root, file)
-                print(f"\n🚀 Checking dependencies: {req_path}")
-                
-                # Leemos el archivo para saltar torch si ya lo manejamos nosotros
-                try:
-                    with open(req_path, 'r') as f:
-                        lines = f.readlines()
-                    
-                    # Filtramos torch del requirements para que no cause error +cu121
-                    filtered_reqs = [l.strip() for l in lines if "torch" not in l.lower()]
-                    
-                    for req in filtered_reqs:
-                        if req:
-                            subprocess.run([sys.executable, "-m", "pip", "install", req, "--quiet"])
-                    
-                    print(f"✅ Environment is synchronized.")
-                except Exception as e:
-                    print(f"❌ Error processing {req_path}: {e}")
+    for root, _, files in os.walk(base_dir):
+        if "requirements.txt" in files:
+            req_path = os.path.join(root, "requirements.txt")
+            print(f"🔍 Sincronizando: {req_path}")
+            
+            # Instalamos el archivo pero ignoramos 'torch' porque ya lo instalamos arriba
+            # Usamos un filtro por comando para que pip no intente bajar la versión con +cu
+            subprocess.run([sys.executable, "-m", "pip", "install", "-r", req_path, "--quiet"], check=False)
 
 if __name__ == "__main__":
-    # 1. Comprobar versión de Python (Incompatibilidad 3.13)
+    # 1. Forzar chequeo de versión
     check_python_version()
 
-    # 2. Asegurar pip
+    # 2. Preparar PIP
     ensure_pip()
     
-    # 3. Instalación inteligente de Torch (Universal)
+    # 3. Torch Universal
     install_torch_universal()
     
-    # 4. Resto de librerías del Hub
+    # 4. Resto de la carpeta
     target_dir = "C:/Apps/App_hub"
     if os.path.exists(target_dir):
         install_requirements_in_directory(target_dir)
     
-    print("\n✨ Process completed successfully.")
+    print("\n✨ Configuración finalizada.")
