@@ -1,10 +1,13 @@
-import subprocess
-import sys
+from pathlib import Path
+
 from repo_manager import *
 from lib_installer import *
 
+APP_DIR = Path(__file__).resolve().parent
+RESOURCES_DIR = APP_DIR / "resources"
+
 ensure_pip()
-install_requirements_in_directory("C:/Apps/App_hub")
+install_requirements_in_directory(APP_DIR)
 
 import customtkinter as ctk
 from PIL import Image
@@ -45,7 +48,7 @@ class App(ctk.CTk):
 
         # Buttons in Tab_1
             # AUDIO ANALYZER BUTTON
-        image_analyzer = Image.open("resources/icons8_microscope.png")
+        image_analyzer = Image.open(RESOURCES_DIR / "icons8_microscope.png")
         self.button_audio_analyzer = ctk.CTkButton(master=self.tab_view.tab("Audio"),
                                                    text="Audio analyzer",
                                                    image=ctk.CTkImage(dark_image=image_analyzer, size=(50, 50)),
@@ -57,7 +60,7 @@ class App(ctk.CTk):
         # self.button_audio_analyzer.grid(row=0, column=0)
 
             # SPEECH 2 TEXT TRANSCRIBER
-        image_item_editor = Image.open("resources/s2tt.png")
+        image_item_editor = Image.open(RESOURCES_DIR / "s2tt.png")
         self.item_editor = ctk.CTkButton(master=self.tab_view.tab("Audio"),
                                          text="ES 2 T\nTranscriber",
                                          image=ctk.CTkImage(dark_image=image_item_editor, size=(50, 50)),
@@ -70,7 +73,7 @@ class App(ctk.CTk):
 
         # Buttons Tab_2
             # RPP CREATOR BUTTON
-        image_reaper_creator = Image.open("resources/icons8_workflow.png")
+        image_reaper_creator = Image.open(RESOURCES_DIR / "icons8_workflow.png")
 
         self.button_reaper_creator = ctk.CTkButton(master=self.tab_view.tab("Reaper Tools"),
                                                    text="Reaper project\nCreator",
@@ -86,7 +89,7 @@ class App(ctk.CTk):
 
         # Buttons Tab_3
             # DOWNLOAD
-        image_backup = Image.open("resources/ffmpeg_icon.png")
+        image_backup = Image.open(RESOURCES_DIR / "ffmpeg_icon.png")
         self.backup_files = ctk.CTkButton(master=self.tab_view.tab("Download"),
                                          text="ffmpeg Installer",
                                          image=ctk.CTkImage(dark_image=image_backup, size=(50, 50)),

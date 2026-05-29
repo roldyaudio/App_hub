@@ -3,10 +3,14 @@ import json
 import os
 import threading
 import sys
+from pathlib import Path
+
+APP_DIR = Path(__file__).resolve().parent
+REPOS_CONFIG = APP_DIR / "repos.json"
 
 # JSON FUNCTIONS
 def load_repos():
-    with open('repos.json', 'r') as file:
+    with REPOS_CONFIG.open('r', encoding='utf-8') as file:
         data = json.load(file)
         return data["download_path"], data["repos"]
 
@@ -45,7 +49,7 @@ def clone_or_update_repo(repo_url, download_path, file_to_run):
 
 
 def clone_or_update_repo_async(repo_url, download_path, file_to_run):
-    threading.Thread(target=clone_or_update_repo, args=(repo_url, download_path, file_to_run)).start()
+    threading.Thread(target=clone_or_update_repo, args=(repo_url, download_path, file_to_run), daemon=True).start()
 
 
 def clone_or_update_repo_2(repo_url, download_path, file_to_run):
@@ -105,9 +109,9 @@ def run_file(repo_path, file_to_run):
         # Verificar si es el mismo directorio donde se ejecuta el hub
         if os.path.samefile(repo_path, current_dir):
             print(f"🔄 Repo is the hub itself. Restarting with updated code: {full_path}")
-            os.execv(sys.executable, ['python', full_path])
+            os.execv(sys.executable, [sys.executable, full_path])
         else:
             print(f"🚀 Launching external app: {full_path}")
-            subprocess.Popen(['python', full_path])
+            subprocess.Popen([sys.executable, full_path], cwd=repo_path)
     else:
         print(f"⚠ File {full_path} does not exist.")
