@@ -1,10 +1,13 @@
 import os
 import subprocess
 import sys
+from pathlib import Path
+
+APP_DIR = Path(__file__).resolve().parent
 
 def ensure_pip():
     try:
-        subprocess.run([sys.executable, "-m", "pip", "--version"], 
+        subprocess.run([sys.executable, "-m", "pip", "--version"],
                        check=True, capture_output=True)
         print("\x1b[0;32m[OK]\x1b[0m pip is ready.")
     except (subprocess.CalledProcessError, FileNotFoundError):
@@ -14,21 +17,22 @@ def ensure_pip():
 def install_requirements_in_directory(base_dir):
     """
     Scans the directory for requirements.txt and installs them.
-    Note: Manual 'setuptools' upgrade was removed to prevent version conflicts 
+    Note: Manual 'setuptools' upgrade was removed to prevent version conflicts
     with specific constraints in the requirements.txt file.
     """
+    base_dir = Path(base_dir)
     for root, dirs, files in os.walk(base_dir):
         for file in files:
             if file == "requirements.txt":
-                req_path = os.path.join(root, file)
+                req_path = Path(root) / file
                 print(f"\n🚀 Checking dependencies: {req_path}")
-                
+
                 # Using --quiet to avoid spamming the console if requirements are already met.
                 # pip will only perform actions if the current version doesn't match the .txt file.
                 result = subprocess.run(
-                    [sys.executable, "-m", "pip", "install", "-r", req_path, "--quiet"]
+                    [sys.executable, "-m", "pip", "install", "-r", str(req_path), "--quiet"]
                 )
-                
+
                 if result.returncode == 0:
                     print(f"✅ Environment is synchronized.")
                 else:
@@ -38,10 +42,8 @@ def install_requirements_in_directory(base_dir):
 if __name__ == "__main__":
     # Ensure environment is ready
     ensure_pip()
-    
-    # Process the specific directory
-    # Note: Hardcoding absolute paths is fine, but os.getcwd() is more portable.
-    target_dir = "C:/Apps/App_hub"
-    install_requirements_in_directory(target_dir)
-    
+
+    # Process the launcher directory instead of relying on the shell's working directory.
+    install_requirements_in_directory(APP_DIR)
+
     print("\n✨ Process completed successfully.")
